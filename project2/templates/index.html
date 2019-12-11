@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Chat room </title>
+    <script type="text/javascript">
+        if (localStorage.getItem('channel') != 'home' && localStorage.getItem('channel') != null){
+            window.location.href = "/channel/" + localStorage.getItem('channel') ;
+        }
+        if (!localStorage.getItem('register')) {
+            window.location.href = "register";
+        }
+        else {
+            window.onload = function(){
+            const nickname_var = localStorage.getItem('register');
+            document.querySelector('#nickname').innerHTML = nickname_var
+            }
+        }
+
+
+    </script>
+    <script>
+        function Logout(){
+            window.location.href = "/logout/" + localStorage.getItem('register');
+            return
+        }
+    </script>
+</head>
+
+<body>
+    <h2> Username: <p id="nickname"></p> </h2>
+    
+    <div class="card" style="width:50rem; margin:auto">
+            <div class="card-body">
+                <h1 class="card-title text-center">Welcome to the chat room</h1>
+                <form action="" method="post">
+                    <div class="form-group">
+                        <input class="form-control" type="text" placeholder="Channel name" name = "channel_name">
+                        <button type="submit" class="btn btn-primary">Add new channel</button>
+                </form>
+
+    {% if  reference_code == 300 %}
+        <h2> That channel already exists. </h2>
+    {% endif %}
+    <h2>Channels</h2>
+    <ul>
+    {%for channel in channels%}
+    <li><a href="channel/{{channel}}">{{channel}}</a></li>
+    {% endfor %}
+</ul>
+
+<button type="button" id="logout" class="btn bt-primary" onclick="Logout()"> Log out </button>
+</body>
